@@ -7,3 +7,4 @@
 **/*.iml
 **/build
 **/.*.keystore
+hs_err_pid*.log
