@@ -20,7 +20,7 @@ class GitHubModule(private val mBaseUrl: String) {
 
     @Provides
     @Singleton
-    internal fun provideHttpCache(application: Application): Cache {
+    fun provideHttpCache(application: Application): Cache {
         val cacheSize = 10 * 1024 * 1024
         val cache = Cache(application.cacheDir, cacheSize.toLong())
         return cache
@@ -28,7 +28,7 @@ class GitHubModule(private val mBaseUrl: String) {
 
     @Provides
     @Singleton
-    internal fun provideInterceptor(): Interceptor {
+    fun provideInterceptor(): Interceptor {
         val interceptor = HttpLoggingInterceptor()
         interceptor.level = HttpLoggingInterceptor.Level.BODY
         return interceptor
@@ -36,7 +36,7 @@ class GitHubModule(private val mBaseUrl: String) {
 
     @Provides
     @Singleton
-    internal fun provideOkHttpClient(cache: Cache, interceptor: Interceptor?): OkHttpClient {
+    fun provideOkHttpClient(cache: Cache, interceptor: Interceptor?): OkHttpClient {
         val client = OkHttpClient.Builder()
         if (interceptor != null) client.addInterceptor(interceptor)
         client.cache(cache)
@@ -45,7 +45,13 @@ class GitHubModule(private val mBaseUrl: String) {
 
     @Provides
     @Singleton
-    internal fun provideGitHub(okHttpClient: OkHttpClient): GitHub {
-        return Retrofit.Builder().addCallAdapterFactory(RxJavaCallAdapterFactory.create()).addConverterFactory(LoganSquareConverterFactory.create()).baseUrl(mBaseUrl).client(okHttpClient).build().create<GitHub>(GitHub::class.java!!)
+    fun provideGitHub(okHttpClient: OkHttpClient): GitHub {
+        return Retrofit.Builder()
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .addConverterFactory(LoganSquareConverterFactory.create())
+                .baseUrl(mBaseUrl)
+                .client(okHttpClient)
+                .build()
+                .create<GitHub>(GitHub::class.java)
     }
 }

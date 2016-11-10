@@ -27,8 +27,10 @@ import rx.schedulers.Schedulers
  */
 class ReposFragment : RxFragment() {
 
+    val TAG = MainActivity::class.java.name
+
     // ListRecyclerAdapter<M, P>
-    private var mRepoAdapter: ListRecyclerAdapter<Repo, RepoListPresenter>? = null
+    var mRepoAdapter: ListRecyclerAdapter<Repo, RepoListPresenter>? = null
 
     @Inject lateinit var gitHub: GitHub
 
@@ -52,7 +54,7 @@ class ReposFragment : RxFragment() {
         mRepoAdapter = ListRecyclerAdapter.create<Repo, RepoListPresenter>()
         // createPresenter with V
         mRepoAdapter!!.createPresenter { parent, viewType -> RepoListPresenter(LayoutInflater.from(context).inflate(R.layout.list_repo, parent, false)) }
-        gitHub!!.repos("yongjhih").compose(bindToLifecycle<List<Repo>>()).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe { repos ->
+        gitHub.repos("yongjhih").compose(bindToLifecycle<List<Repo>>()).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe { repos ->
             // populate M with retrofit as repository
             mRepoAdapter!!.list.clear()
             mRepoAdapter!!.list.addAll(repos)
@@ -66,12 +68,5 @@ class ReposFragment : RxFragment() {
         // TODO pull2refresh feature
         return view
     }
-
-    companion object {
-        val TAG = ReposFragment::class.java!!.getSimpleName()
-    }
 }
-/**
- * Mandatory empty constructor for the fragment manager to instantiate the
- * fragment (e.g. upon screen orientation changes).
- */
+

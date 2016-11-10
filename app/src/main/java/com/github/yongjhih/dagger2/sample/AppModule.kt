@@ -8,11 +8,11 @@ import dagger.Module
 import dagger.Provides
 
 @Module
-class AppModule(internal var mApplication: Application) {
+class AppModule(var mApplication: Application) {
 
     @Provides
     @Singleton
-    internal fun provideApplication(): Application {
+    fun provideApplication(): Application {
         return mApplication
     }
 }
