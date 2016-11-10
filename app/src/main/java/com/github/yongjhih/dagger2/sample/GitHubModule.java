@@ -21,7 +21,7 @@ import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 public class GitHubModule {
     private final String mBaseUrl;
 
-    public GitHubModule(@NonNull String mBaseUrl) {
+    public GitHubModule(String mBaseUrl) {
         this.mBaseUrl = mBaseUrl;
     }
 

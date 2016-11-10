@@ -21,4 +21,5 @@ public class App extends MultiDexApplication {
     public MainComponent mainComponent() {
         return mainComponent;
     }
+
 }

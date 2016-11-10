@@ -1,12 +1,7 @@
 package com.github.yongjhih.dagger2.sample;
 
-import android.support.annotation.NonNull;
-
 import com.bluelinelabs.logansquare.annotation.JsonField;
 import com.bluelinelabs.logansquare.annotation.JsonObject;
-
-import java.util.Collections;
-import java.util.List;
 
 /**
  * <pre>
