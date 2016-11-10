@@ -52,13 +52,18 @@ class ReposFragment : RxFragment() {
 
         // TODO use regular MVP instead of simple presenter
         mRepoAdapter = ListRecyclerAdapter.create<Repo, RepoListPresenter>()
-        // createPresenter with V
-        mRepoAdapter?.createPresenter { parent, viewType -> RepoListPresenter(LayoutInflater.from(context).inflate(R.layout.list_repo, parent, false)) }
-        gitHub.repos("yongjhih").compose(bindToLifecycle<List<Repo>>()).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe { repos ->
-            // populate M with retrofit as repository
-            mRepoAdapter?.list?.clear()
-            mRepoAdapter?.list?.addAll(repos)
-            mRepoAdapter?.notifyDataSetChanged()
+                .createPresenter { parent, viewType ->
+                    RepoListPresenter(LayoutInflater.from(context).inflate(R.layout.list_repo, parent, false))
+                }
+        gitHub.repos("yongjhih")
+              .compose(bindToLifecycle<List<Repo>>())
+              .subscribeOn(Schedulers.io())
+              .observeOn(AndroidSchedulers.mainThread())
+              .subscribe { repos ->
+                  // populate M with retrofit as repository
+                  mRepoAdapter?.list?.clear()
+                  mRepoAdapter?.list?.addAll(repos)
+                  mRepoAdapter?.notifyDataSetChanged()
         }
 
         val context = view.context
