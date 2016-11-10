@@ -19,7 +19,7 @@ class RepoListPresenter(itemView: View) : Presenter<Repo>(itemView) {
         if (repo == null) return
 
         title.text = repo.name
-        val draweeController = Fresco.newDraweeControllerBuilder().setImageRequest(ImageRequest.fromUri(Uri.parse(repo.owner!!.avatar_url))).setOldController(imageView.controller).build()
+        val draweeController = Fresco.newDraweeControllerBuilder().setImageRequest(ImageRequest.fromUri(Uri.parse(repo.owner?.avatar_url))).setOldController(imageView.controller).build()
         imageView.controller = draweeController
     }
 }
