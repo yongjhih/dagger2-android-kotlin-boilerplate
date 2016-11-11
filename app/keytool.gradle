@@ -1,0 +1,13 @@
+apply plugin: 'keytool'
+
+afterEvaluate {
+    android.applicationVariants.all { variant ->
+        if (variant.signingConfig && !file(variant.signingConfig.storeFile).exists()) {
+            genkey.options.keystore = variant.signingConfig.storeFile
+            genkey.options.alias = variant.signingConfig.keyAlias
+            genkey.options.storepass = variant.signingConfig.storePassword
+            genkey.options.keypass = variant.signingConfig.keyPassword
+            variant.javaCompiler.dependsOn(genkey)
+        }
+    }
+}
